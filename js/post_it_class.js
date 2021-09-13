@@ -27,8 +27,18 @@ class PostIt{
         this.status = status;
     }
 
-    display(){
-        let myPostIt = document.createElement("div");
+    display(idDuPostIt){
+        let myPostIt;
+        let isNew;
+        if (document.getElementById("PostIt_"+idDuPostIt) == null){
+            // The post it doesn't exist so we create it
+            myPostIt = document.createElement("div");
+            isNew = 1;
+        }else{
+            myPostIt = document.getElementById("PostIt_"+idDuPostIt);
+            isNew = 0;
+        }
+        
         myPostIt.id = "PostIt_"+this.id;
         myPostIt.classList.add("post_it");
         myPostIt.style.zIndex = this.indexu;
@@ -36,25 +46,29 @@ class PostIt{
         myPostIt.style.top = this.y+"px";
         myPostIt.style.width = this.width+"px";
         myPostIt.style.height = this.height+"px";
+        console.log("display : "+this.backgroundColor);
         myPostIt.style.backgroundColor = this.backgroundColor;
         myPostIt.style.color = this.color;
         myPostIt.innerHTML = this.text;
         myPostIt.style.fontSize = this.fontSize+"px";
         myPostIt.style.transform = "rotate("+this.rotation+"deg)";
         myPostIt.style.position = "absolute";
-        document.getElementById("zone_post_it").appendChild(myPostIt);
+        if(isNew){
+            document.getElementById("zone_post_it").appendChild(myPostIt);
+        }else if(this.status == 0){
+            console.log("id post it : "+idDuPostIt+" // ")
+            myPostIt.style.display = "none";
+        }
     }
 
-    move(id, moveX, moveY){
-        let myPostIt = document.getElementById("PostIt_"+id);
-        myPostIt.style.left = (this.x+moveX)+"px";
-        myPostIt.style.top = (this.y+moveY)+"px";
+    move(moveX, moveY){
+        this.x = this.x + moveX;
+        this.y = this.y + moveY;
     }
 
-    resize(id, resizeWidth, resizeHeight){
-        let myPostIt = document.getElementById("PostIt_"+id);
-        myPostIt.style.width = (this.width+resizeWidth)+"px";
-        myPostIt.style.height = (this.height+resizeHeight)+"px";
+    resize(resizeWidth, resizeHeight){
+        this.width = (this.width+resizeWidth)+"px";
+        this.height = (this.height+resizeHeight)+"px";
     }
 
     // We check the entire tablePostIt to see the highest index and add 1 to it for our post-it
@@ -74,11 +88,20 @@ class PostIt{
         this.status = 0;
     }
 
-    // rotate a faire ou pas ?
+    changeBackgroundColor(newColor){
+        this.backgroundColor = newColor;
+    }
 
-    // changeBackgroundColor(){
-    //     this
-    // }
+    changeColor(newColor){
+        this.color = newColor;
+    }
 
+    changeFontSize(newSize){
+        this.fontSize = newSize;
+    }
+
+    changeText(newText){
+        this.text = newText;
+    }
 
 }

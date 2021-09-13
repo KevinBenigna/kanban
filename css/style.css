@@ -28,6 +28,10 @@
     position: relative;
     border: 1px solid blue;
 }
+
+a{
+    background-color: var(--var-main1);
+}
 /* .post_it{
     
 } */

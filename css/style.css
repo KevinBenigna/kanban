@@ -1,13 +1,12 @@
-.root{
+:root{
     --var-main1 : #15527a;
     --var-main2 : #4089b9;
-    --var-main3 : #ccb90c;
+    --var-main3 : #f3d240;
     --var-black : #000000;
     --var-white : #FFFFFF;
 }
 
 #main{
-    border: 1px solid red;
     width: 1200px;
     margin: auto;
     display: flex;
@@ -17,16 +16,44 @@
 #banner{
     height: 50px;
     width: 100%;
+    background-color: var(--var-main2);
+    color: var(--var-main3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#software{
+    display: flex;
 }
 #menu{
-    height: 50px;
-    width: 100%;
+    height: 600px;
+    width: 150px;
+    background-color: var(--var-main1);
+    display: flex;
+    flex-direction: column;
 }
+#menu>*{
+    margin: 10px;
+}
+#create_button{
+    border: 2px solid var(--var-main3);
+    color: var(--var-white);
+    background-color: var(--var-main2);
+    transition: 777ms;
+}
+#create_button:hover{
+    background-color: var(--var-main1);
+}
+
+
+
+
+
 #zone_post_it{
     height: 600px;
     width: 100%;
     position: relative;
-    border: 1px solid blue;
 }
 
 a{

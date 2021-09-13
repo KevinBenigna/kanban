@@ -18,16 +18,13 @@ displayPostIt();
 tablePostIt[0].move(300, 100);
 tablePostIt[0].resize(50, 50);
 tablePostIt[0].forward(0, tablePostIt);
-console.log("trash status of post it id 1, red before : "+tablePostIt[1].status);
 tablePostIt[1].sendToTrash();
-console.log("trash status of post it id 1, red after : "+tablePostIt[1].status);
 
 
 tablePostIt[0].changeBackgroundColor("#BBBBBB");
 tablePostIt[0].changeColor("#662299");
 tablePostIt[0].changeFontSize(36);
 tablePostIt[0].changeText("Yo new text here");
-console.log("slfksmlfksfkslmfksmlfklmf");
 displayPostIt();
 
 

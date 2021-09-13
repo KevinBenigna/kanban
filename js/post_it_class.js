@@ -46,7 +46,6 @@ class PostIt{
         myPostIt.style.top = this.y+"px";
         myPostIt.style.width = this.width+"px";
         myPostIt.style.height = this.height+"px";
-        console.log("display : "+this.backgroundColor);
         myPostIt.style.backgroundColor = this.backgroundColor;
         myPostIt.style.color = this.color;
         myPostIt.innerHTML = this.text;
@@ -56,7 +55,7 @@ class PostIt{
         if(isNew){
             document.getElementById("zone_post_it").appendChild(myPostIt);
         }else if(this.status == 0){
-            console.log("id post it : "+idDuPostIt+" // ")
+            // console.log("id post it : "+idDuPostIt+" // ");
             myPostIt.style.display = "none";
         }
     }

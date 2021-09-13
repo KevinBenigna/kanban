@@ -1,0 +1,1 @@
+let postittest = new PostIt(1, 200, 100, 400, 400, "#CCFFCC", "#0000FF", "Ceci est un test", "")

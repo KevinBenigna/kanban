@@ -76,9 +76,9 @@ class PostIt{
 
     // rotate a faire ou pas ?
 
-    changeBackgroundColor(){
-        this.
-    }
+    // changeBackgroundColor(){
+    //     this
+    // }
 
 
 }

@@ -1,0 +1,33 @@
+.root{
+    --var-main1 : #15527a;
+    --var-main2 : #4089b9;
+    --var-main3 : #ccb90c;
+    --var-black : #000000;
+    --var-white : #FFFFFF;
+}
+
+#main{
+    border: 1px solid red;
+    width: 1200px;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+#banner{
+    height: 50px;
+    width: 100%;
+}
+#menu{
+    height: 50px;
+    width: 100%;
+}
+#zone_post_it{
+    height: 600px;
+    width: 100%;
+    position: relative;
+    border: 1px solid blue;
+}
+/* .post_it{
+    
+} */

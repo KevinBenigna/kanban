@@ -21,7 +21,7 @@ tablePostIt[0].forward(0, tablePostIt);
 tablePostIt[1].sendToTrash();
 
 
-tablePostIt[0].changeBackgroundColor("#BBBBBB");
+tablePostIt[0].changeBackgroundColor("#BBBBFF");
 tablePostIt[0].changeColor("#662299");
 tablePostIt[0].changeFontSize(36);
 tablePostIt[0].changeText("Yo new text here");

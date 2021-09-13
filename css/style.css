@@ -55,7 +55,7 @@ body{
 }
 #menu>*{
     margin: 6px;
-    border: 1px solid pink;
+    /* border: 1px solid pink; */
 }
 .div_icon{
     display: flex;

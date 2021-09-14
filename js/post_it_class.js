@@ -27,6 +27,19 @@ class PostIt{
         this.status = status;
     }
 
+    getId(){
+        console.log("Ancien id : "+indexPostIt);
+        console.log("Nouvel id : "+this.id);
+        if((indexPostIt == -1) || (indexPostIt != this.id)){
+            actualId = this.id;
+        }else if(indexPostIt == this.id){
+            actualId = -1;
+        }
+        document.getElementById("post_it_id").innerHTML = "Post-it id : "+actualId;
+        indexPostIt = actualId;
+        console.log("Id que l'on garde : "+actualId);
+    }
+
     display(idDuPostIt){
         let myPostIt;
         let isNew;
@@ -52,22 +65,45 @@ class PostIt{
         myPostIt.style.fontSize = this.fontSize+"px";
         myPostIt.style.transform = "rotate("+this.rotation+"deg)";
         myPostIt.style.position = "absolute";
+        // Annonymous function doesn't knows about .this
+        myPostIt.onclick = ()=>{ this.getId();} ;
+        //myPostIt.onclick = ()=>{ this.move(100, 100, idDuPostIt);} ;
         if(isNew){
             document.getElementById("zone_post_it").appendChild(myPostIt);
         }else if(this.status == 0){
-            // console.log("id post it : "+idDuPostIt+" // ");
             myPostIt.style.display = "none";
         }
     }
 
-    move(moveX, moveY){
-        this.x = this.x + moveX;
-        this.y = this.y + moveY;
+    move(idDuPostIt, newX, newY, widthMenu, heightBanner){
+        this.x = newX-widthMenu-(this.width/2);
+        this.y = newY-heightBanner-(this.height/2);
+        if(this.x <= 0){
+            this.x = 0;
+        }else if(this.x+this.width+widthMenu > window.innerWidth){
+            this.x = window.innerWidth-this.width-widthMenu;
+        }
+        if(this.y <= 0){
+            this.y = 0;
+        }else if(this.y+this.height+heightBanner > window.innerHeight){
+            this.y = window.innerHeight-this.height-heightBanner;
+        }
+        this.display(idDuPostIt);
+        console.log("this x "+this.x+" // this y "+this.y);
     }
 
-    resize(resizeWidth, resizeHeight){
-        this.width = (this.width+resizeWidth)+"px";
-        this.height = (this.height+resizeHeight)+"px";
+    resize(newWidth, newHeight){
+        if(this.width > 100){
+            this.width = newWidth+"px";
+        }else{
+            this.width = 100;
+        }
+        if(this.height > 100){
+            this.height = newHeight+"px";
+        }else{
+            this.height = 100;
+        }
+        console.log("this width "+this.width+" // this height "+this.height);
     }
 
     // We check the entire tablePostIt to see the highest index and add 1 to it for our post-it

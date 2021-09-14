@@ -5,7 +5,8 @@
     --var-gray4 : #9e9e9e;
     --var-main1 : #15527a;
     --var-main2 : #4089b9;
-    --var-main3 : #f3d240;
+    --var-main3 : #ffff00;
+    --var-main4 : #f3d240;
     --var-black : #000000;
     --var-white : #FFFFFF;
 }
@@ -51,7 +52,7 @@ body{
     background-color: var(--var-gray3);
     display: grid;
     grid-template-columns: 120px 40px;
-    grid-template-rows: 60px 80px 80px 40px 40px 40px 40px;
+    grid-template-rows: 60px 80px 80px 40px 40px 40px 40px 40px 40px 40px 40px;
 }
 #menu>*{
     margin: 6px;
@@ -87,8 +88,32 @@ body{
     color: var(--var-main3);
     border: 2px solid var(--var-main3);
 }
-
+/* refaire le css/html du menu bas plus tard /////////////////////////////////////////////////////////////////////////////////////////////////// */
 #Informations {
+    grid-column: 1 / span 2;
+    color: var(--var-gray4);
+    display: flex;
+    justify-content: center;
+}
+#mouse_x{
+    grid-column: 1 / span 2;
+    color: var(--var-gray4);
+    display: flex;
+    justify-content: center;
+}
+#mouse_y{
+    grid-column: 1 / span 2;
+    color: var(--var-gray4);
+    display: flex;
+    justify-content: center;
+}
+#post_it_id{
+    grid-column: 1 / span 2;
+    color: var(--var-gray4);
+    display: flex;
+    justify-content: center;
+}
+#action{
     grid-column: 1 / span 2;
     color: var(--var-gray4);
     display: flex;
@@ -102,5 +127,9 @@ body{
 #zone_post_it{
     height: 600px;
     position: relative;
-    border: 1px solid red;
+    /* border: 1px solid red; */
+}
+
+.post_it{
+    box-shadow: 5px 5px 5px var(--var-gray3);
 }

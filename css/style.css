@@ -133,3 +133,13 @@ body{
 .post_it{
     box-shadow: 5px 5px 5px var(--var-gray3);
 }
+
+/* ------------------------------------ */
+/* ---------- OPTIONS POST IT --------- */
+/* ------------------------------------ */
+/* .options_post_it{
+    background-color: var(--var-main2);
+} */
+.container_text{
+    background-color: var(--var-main2);
+}

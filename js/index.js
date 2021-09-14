@@ -1,6 +1,8 @@
 let indexPostIt = -1;
 let actualId = -1;
 let action = "move";
+let mouseX = 0;
+let mouseY = 0;
 
 window.addEventListener("load", () =>{
 
@@ -11,10 +13,12 @@ let heightBanner = document.getElementById("banner").offsetHeight;
 function handlerMouseMove(e){
     document.getElementById("mouse_x").innerHTML = "Mouse X : "+e.clientX;
     document.getElementById("mouse_y").innerHTML = "Mouse Y : "+e.clientY;
+    mouseX = e.clientX;
+    mouseY = e.clientY;
     if(actualId != -1){
         switch(action){
             case "move":
-                tablePostIt[actualId].move(actualId, e.clientX, e.clientY, widthMenu, heightBanner);
+                tablePostIt[actualId].move(actualId, mouseX, mouseY, widthMenu, heightBanner);
                 break;
             
             case "resize":
@@ -31,6 +35,7 @@ document.addEventListener("mousemove", handlerMouseMove, false);
 
 document.getElementById("create_button").onclick = function (){ createPostIt(); };
 
+
 function createPostIt(){
     // Default values for any post-it
     indexPostIt++;
@@ -38,8 +43,8 @@ function createPostIt(){
     let width = 250;
     let height = 250;
     let indexu = indexPostIt;
-    let x = Math.floor(Math.random() * (window.screen.width - width - widthMenu));
-    let y = Math.floor(Math.random() * (document.getElementById("zone_post_it").offsetHeight) - height)+height;
+    let x = Math.floor(Math.random() * (window.innerWidth - width - widthMenu));
+    let y = Math.floor(Math.random() * (window.innerHeight - height - heightBanner));
     let backgroundColor = "#FFFF00";
     let color = "#0000FF";
     let text = "Ceci est un test";

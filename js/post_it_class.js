@@ -40,18 +40,35 @@ class PostIt{
         console.log("Id que l'on garde : "+actualId);
     }
 
+
+
+    createOptions(myPostIt){
+        optionsMenu = document.createElement("div");
+        optionsMenu.id = "OptionPostIt_"+this.id;
+        optionsMenu.classList.add("options_post_it");
+
+        //boutonResize = document.createElement("div");
+
+        myPostIt.appendChild(optionsMenu);
+    }
+
     display(idDuPostIt){
         let myPostIt;
         let isNew;
+        let containerText;
         if (document.getElementById("PostIt_"+idDuPostIt) == null){
             // The post it doesn't exist so we create it
             myPostIt = document.createElement("div");
             isNew = 1;
+            containerText = document.createElement("div");
+            containerText.classList.add("container_text");
+            containerText.id = "ContainerText_"+this.id;
+            containerText.innerHTML = this.text;
+
         }else{
             myPostIt = document.getElementById("PostIt_"+idDuPostIt);
             isNew = 0;
         }
-        
         myPostIt.id = "PostIt_"+this.id;
         myPostIt.classList.add("post_it");
         myPostIt.style.zIndex = this.indexu;
@@ -61,20 +78,30 @@ class PostIt{
         myPostIt.style.height = this.height+"px";
         myPostIt.style.backgroundColor = this.backgroundColor;
         myPostIt.style.color = this.color;
-        myPostIt.innerHTML = this.text;
         myPostIt.style.fontSize = this.fontSize+"px";
         myPostIt.style.transform = "rotate("+this.rotation+"deg)";
         myPostIt.style.position = "absolute";
         // Annonymous function doesn't knows about .this
         myPostIt.onclick = ()=>{ this.getId();} ;
-        //myPostIt.onclick = ()=>{ this.move(100, 100, idDuPostIt);} ;
+
         if(isNew){
             document.getElementById("zone_post_it").appendChild(myPostIt);
+            document.getElementById("PostIt_"+this.id).appendChild(containerText);
+            //this.createOptions(myPostIt);
         }else if(this.status == 0){
             myPostIt.style.display = "none";
         }
     }
 
+    /**
+     * function that moves the post it according to the cursor position
+     * 
+     * @param {number} idDuPostIt - id of the post it that we are moving
+     * @param {number} newX - X value of the cursor
+     * @param {number} newY - Y value of the cursor
+     * @param {number} widthMenu - width of the left menu of the website
+     * @param {number} heightBanner - height of the top banner of the website
+     */
     move(idDuPostIt, newX, newY, widthMenu, heightBanner){
         this.x = newX-widthMenu-(this.width/2);
         this.y = newY-heightBanner-(this.height/2);
@@ -89,7 +116,7 @@ class PostIt{
             this.y = window.innerHeight-this.height-heightBanner;
         }
         this.display(idDuPostIt);
-        console.log("this x "+this.x+" // this y "+this.y);
+        // console.log("this x "+this.x+" // this y "+this.y);
     }
 
     resize(newWidth, newHeight){

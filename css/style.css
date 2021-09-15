@@ -131,7 +131,7 @@ body{
 }
 
 .post_it{
-    box-shadow: 5px 5px 5px var(--var-gray3);
+    box-shadow: 3px 3px 3px var(--var-gray3);
 }
 
 /* ------------------------------------ */
@@ -141,5 +141,6 @@ body{
     background-color: var(--var-main2);
 } */
 .container_text{
-    background-color: var(--var-main2);
+    /* background-color: var(--var-main2); */
+    position : fixed;
 }

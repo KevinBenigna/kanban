@@ -4,6 +4,26 @@ let action = "move";
 let mouseX = 0;
 let mouseY = 0;
 
+
+/**
+ * regarder comment faire ça pour les variables 
+ */
+let postItContainer = {
+    top : 5,
+    left : 5
+}
+/**
+ * height - of the options div
+ * top - margin of top (and bot)
+ * left - margin of left (and right)
+ */
+let postItOptions = {
+    height : 40,
+    top : 5,
+    left : 5
+};
+
+
 window.addEventListener("load", () =>{
 
 let tablePostIt = [];

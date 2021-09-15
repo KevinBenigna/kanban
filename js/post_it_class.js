@@ -33,7 +33,12 @@ class PostIt{
         if((indexPostIt == -1) || (indexPostIt != this.id)){
             actualId = this.id;
         }else if(indexPostIt == this.id){
-            actualId = -1;
+            if(actualId == -1){
+                // This test is for the very first time we clic on a post-it so we don't have to clic twice to select it
+                actualId = this.id;
+            }else{
+                actualId = -1;
+            }
         }
         document.getElementById("post_it_id").innerHTML = "Post-it id : "+actualId;
         indexPostIt = actualId;
@@ -60,10 +65,15 @@ class PostIt{
             // The post it doesn't exist so we create it
             myPostIt = document.createElement("div");
             isNew = 1;
+            // We create the text container as well
             containerText = document.createElement("div");
             containerText.classList.add("container_text");
             containerText.id = "ContainerText_"+this.id;
             containerText.innerHTML = this.text;
+            containerText.style.height = this.height - postItOptions.height - (postItContainer.top*2)+"px";
+            containerText.style.width = this.width - (postItContainer.left *2)+"px";
+            containerText.style.top = postItContainer.top+"px";
+            containerText.style.left = postItContainer.left+"px";
 
         }else{
             myPostIt = document.getElementById("PostIt_"+idDuPostIt);

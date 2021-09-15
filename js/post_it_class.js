@@ -45,35 +45,42 @@ class PostIt{
         console.log("Id que l'on garde : "+actualId);
     }
 
+    createContainerText(){
+        let containerText = document.createElement("div");
+        containerText.classList.add("container_text");
+        containerText.id = "ContainerText_"+this.id;
+        containerText.innerHTML = this.text;
+        containerText.style.height = this.height - postItOptions.height - (postItContainer.top*3)+"px";
+        containerText.style.width = this.width - (postItContainer.left *2)+"px";
+        containerText.style.top = postItContainer.top+"px";
+        containerText.style.left = postItContainer.left+"px";
+        return containerText;
+    }
 
-
-    createOptions(myPostIt){
-        optionsMenu = document.createElement("div");
+    createOptions(){
+        let optionsMenu = document.createElement("div");
+        optionsMenu.classList.add("options_menu");
         optionsMenu.id = "OptionPostIt_"+this.id;
-        optionsMenu.classList.add("options_post_it");
+        optionsMenu.style.height = postItOptions.height+"px";
+        optionsMenu.style.width = this.width - (postItOptions.left * 2)+"px";
+        optionsMenu.style.bottom = postItOptions.bottom+"px";
+        optionsMenu.style.left = postItOptions.left+"px";
 
-        //boutonResize = document.createElement("div");
-
-        myPostIt.appendChild(optionsMenu);
+        return optionsMenu;
     }
 
     display(idDuPostIt){
         let myPostIt;
         let isNew;
         let containerText;
+        let optionsMenu;
         if (document.getElementById("PostIt_"+idDuPostIt) == null){
             // The post it doesn't exist so we create it
             myPostIt = document.createElement("div");
             isNew = 1;
             // We create the text container as well
-            containerText = document.createElement("div");
-            containerText.classList.add("container_text");
-            containerText.id = "ContainerText_"+this.id;
-            containerText.innerHTML = this.text;
-            containerText.style.height = this.height - postItOptions.height - (postItContainer.top*2)+"px";
-            containerText.style.width = this.width - (postItContainer.left *2)+"px";
-            containerText.style.top = postItContainer.top+"px";
-            containerText.style.left = postItContainer.left+"px";
+            containerText = this.createContainerText();
+            optionsMenu = this.createOptions();
 
         }else{
             myPostIt = document.getElementById("PostIt_"+idDuPostIt);
@@ -97,6 +104,7 @@ class PostIt{
         if(isNew){
             document.getElementById("zone_post_it").appendChild(myPostIt);
             document.getElementById("PostIt_"+this.id).appendChild(containerText);
+            document.getElementById("PostIt_"+this.id).appendChild(optionsMenu);
             //this.createOptions(myPostIt);
         }else if(this.status == 0){
             myPostIt.style.display = "none";

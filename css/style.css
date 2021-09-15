@@ -137,10 +137,11 @@ body{
 /* ------------------------------------ */
 /* ---------- OPTIONS POST IT --------- */
 /* ------------------------------------ */
-/* .options_post_it{
-    background-color: var(--var-main2);
-} */
-.container_text{
+.options_menu{
     /* background-color: var(--var-main2); */
+    position : fixed;
+}
+.container_text{
+    /* background-color: var(--var-main1); */
     position : fixed;
 }

@@ -19,7 +19,7 @@ let postItContainer = {
  */
 let postItOptions = {
     height : 40,
-    top : 5,
+    bottom : 5,
     left : 5
 };
 

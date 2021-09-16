@@ -137,11 +137,21 @@ body{
 /* ------------------------------------ */
 /* ---------- OPTIONS POST IT --------- */
 /* ------------------------------------ */
-.options_menu{
-    /* background-color: var(--var-main2); */
-    position : fixed;
-}
 .container_text{
     /* background-color: var(--var-main1); */
     position : fixed;
+}
+.options_menu{
+    /* background-color: var(--var-main2); */
+    position : fixed;
+    display: flex;
+    justify-content: flex-end;
+}
+.option{
+    /* background-color: var(--var-gray1); */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--var-gray1);
+    border: 1px solid var(--var-gray1);
 }

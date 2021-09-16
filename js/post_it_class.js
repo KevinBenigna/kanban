@@ -27,9 +27,38 @@ class PostIt{
         this.status = status;
     }
 
+    myActionValue(leAction){
+        actualId = this.getId();
+        console.log("YO"+actualId);
+        action = leAction;
+        console.log("MYACTIONVALUE action is : "+leAction+" // actualId "+actualId);
+        document.getElementById("post_it_id").innerHTML = "Post-it id : "+actualId;
+        if(actualId != -1){
+            switch(action){
+                case "move":
+                    this.move(actualId, mouseX, mouseY, widthMenu, heightBanner);
+                    break;
+                
+                case "resize":
+                    this.resize();
+                    break;
+    
+                case "sendToTrash":
+                    this.sendToTrash();
+                    break;
+                    
+                case "none":
+                    break;
+            }
+        }else{
+            // If the actualId is -1 it means we're not doing anything
+            action = "none";
+        }
+    }
+
     getId(){
-        console.log("Ancien id : "+indexPostIt);
-        console.log("Nouvel id : "+this.id);
+        // console.log("Ancien id : "+indexPostIt);
+        // console.log("Nouvel id : "+this.id);
         if((indexPostIt == -1) || (indexPostIt != this.id)){
             actualId = this.id;
         }else if(indexPostIt == this.id){
@@ -42,7 +71,8 @@ class PostIt{
         }
         document.getElementById("post_it_id").innerHTML = "Post-it id : "+actualId;
         indexPostIt = actualId;
-        console.log("Id que l'on garde : "+actualId);
+        // console.log("Id que l'on garde : "+actualId);
+        return actualId;
     }
 
     createContainerText(){
@@ -54,10 +84,10 @@ class PostIt{
         containerText.style.width = this.width - (postItContainer.left *2)+"px";
         containerText.style.top = postItContainer.top+"px";
         containerText.style.left = postItContainer.left+"px";
-        return containerText;
+        document.getElementById("PostIt_"+this.id).appendChild(containerText);
     }
 
-    createOptions(){
+    createOptionsMenu(){
         let optionsMenu = document.createElement("div");
         optionsMenu.classList.add("options_menu");
         optionsMenu.id = "OptionPostIt_"+this.id;
@@ -65,23 +95,32 @@ class PostIt{
         optionsMenu.style.width = this.width - (postItOptions.left * 2)+"px";
         optionsMenu.style.bottom = postItOptions.bottom+"px";
         optionsMenu.style.left = postItOptions.left+"px";
+        document.getElementById("PostIt_"+this.id).appendChild(optionsMenu);
+    }
 
-        return optionsMenu;
+    createTheOptions(){
+        for(let options of optionsList){
+            let mydiv = document.createElement("div");
+            mydiv.classList.add("option");
+            mydiv.id = "Option_"+options.nom;
+            mydiv.height = postItOptions.height+"px";
+            mydiv.style.marginLeft = postItOptions.marginLeft+"px";
+            mydiv.style.width = postItOptions.width+"px";
+            mydiv.innerHTML = options.logo;
+            mydiv.onclick = ()=>{ this.myActionValue(options.nom);} ;
+            document.getElementById("OptionPostIt_"+this.id).appendChild(mydiv);
+        }
     }
 
     display(idDuPostIt){
         let myPostIt;
         let isNew;
-        let containerText;
-        let optionsMenu;
         if (document.getElementById("PostIt_"+idDuPostIt) == null){
             // The post it doesn't exist so we create it
             myPostIt = document.createElement("div");
             isNew = 1;
-            // We create the text container as well
-            containerText = this.createContainerText();
-            optionsMenu = this.createOptions();
-
+            console.log("IS NEW ?!");
+            console.log("ID POST IT : "+idDuPostIt)
         }else{
             myPostIt = document.getElementById("PostIt_"+idDuPostIt);
             isNew = 0;
@@ -98,14 +137,14 @@ class PostIt{
         myPostIt.style.fontSize = this.fontSize+"px";
         myPostIt.style.transform = "rotate("+this.rotation+"deg)";
         myPostIt.style.position = "absolute";
-        // Annonymous function doesn't knows about .this
+        // Anonymous function doesn't knows about .this
         myPostIt.onclick = ()=>{ this.getId();} ;
 
         if(isNew){
             document.getElementById("zone_post_it").appendChild(myPostIt);
-            document.getElementById("PostIt_"+this.id).appendChild(containerText);
-            document.getElementById("PostIt_"+this.id).appendChild(optionsMenu);
-            //this.createOptions(myPostIt);
+            this.createContainerText();
+            this.createOptionsMenu();
+            this.createTheOptions();
         }else if(this.status == 0){
             myPostIt.style.display = "none";
         }
@@ -121,6 +160,7 @@ class PostIt{
      * @param {number} heightBanner - height of the top banner of the website
      */
     move(idDuPostIt, newX, newY, widthMenu, heightBanner){
+        console.log("Dans function move "+idDuPostIt);
         this.x = newX-widthMenu-(this.width/2);
         this.y = newY-heightBanner-(this.height/2);
         if(this.x <= 0){
@@ -133,26 +173,55 @@ class PostIt{
         }else if(this.y+this.height+heightBanner > window.innerHeight){
             this.y = window.innerHeight-this.height-heightBanner;
         }
+        console.log("MOVE actualId "+actualId);
         this.display(idDuPostIt);
+        console.log("DISPLAY actualId "+actualId);
         // console.log("this x "+this.x+" // this y "+this.y);
     }
 
-    resize(newWidth, newHeight){
-        if(this.width > 100){
-            this.width = newWidth+"px";
-        }else{
-            this.width = 100;
-        }
-        if(this.height > 100){
-            this.height = newHeight+"px";
-        }else{
-            this.height = 100;
-        }
+    resize(){
+        action = "resize";
+        // this.width = 0;
+
+
+        // if(this.width > 100){
+        //     this.width = newWidth+"px";
+        // }else{
+        //     this.width = 100;
+        // }
+        // if(this.height > 100){
+        //     this.height = newHeight+"px";
+        // }else{
+        //     this.height = 100;
+        // }
+
+        // if(this.id !== actualId){
+        //     // We save the click position
+        //     mouseXsave = mouseX;
+        //     mouseYsave = mouseY;
+        // }else if(this.id === actualId){
+        //     // 2nd time we clic, we compare both
+        //     let newWidth = mouseX - mouseXsave;
+        //     let newHeight = mouseY - mouseYsave;
+
+        //     if(this.width > 100){
+        //         this.width = newWidth+"px";
+        //     }else{
+        //         this.width = 100;
+        //     }
+        //     if(this.height > 100){
+        //         this.height = newHeight+"px";
+        //     }else{
+        //         this.height = 100;
+        //     }
+        // }
+
         console.log("this width "+this.width+" // this height "+this.height);
     }
 
     // We check the entire tablePostIt to see the highest index and add 1 to it for our post-it
     forward(id, tablePostIt){
+        action = "forward";
         let myPostIt = document.getElementById("PostIt_"+id);
         let maxIndex = 0;
         for(let p = 0; p < tablePostIt.length; p++){
@@ -166,6 +235,9 @@ class PostIt{
 
     sendToTrash(){
         this.status = 0;
+        action = "none";
+        console.log("send to trash action"+action);
+        this.display(this.id);
     }
 
     changeBackgroundColor(newColor){

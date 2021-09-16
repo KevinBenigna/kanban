@@ -1,53 +1,85 @@
 let indexPostIt = -1;
 let actualId = -1;
-let action = "move";
+let action = "none";
 let mouseX = 0;
 let mouseY = 0;
+let mouseXsave = 0;
+let mouseYsave = 0;
+let widthMenu = 0;
+let heightBanner = 0;
+let tablePostIt = [];
+let optionsList = [
+    {
+        nom : "sendToTrash",
+        logo : '<i class="far fa-trash-alt"></i>'
+    },
+    {
+        nom : "forward",
+        logo : '<i class="fas fa-share-square"></i>'
+    },
+    {
+        nom : "move",
+        logo : '<i class="fas fa-arrows-alt"></i>'
+    },
+    {
+        nom : "resize",
+        logo : '<i class="fas fa-expand-arrows-alt"></i>'
+    }
+];
 
 
 /**
- * regarder comment faire ça pour les variables 
+ * Margins for top and left of the text container
  */
 let postItContainer = {
     top : 5,
     left : 5
 }
 /**
- * height - of the options div
- * top - margin of top (and bot)
- * left - margin of left (and right)
+ * @namespace
+ * @property {number} height - of the options div
+ * @property {number} top - margin of top (and bot)
+ * @property {number} left - margin of left (and right)
+ * 
  */
 let postItOptions = {
-    height : 40,
+    height : 30,
     bottom : 5,
-    left : 5
+    left : 5, 
+    marginLeft : 10,
+    width : 30
 };
 
 
 window.addEventListener("load", () =>{
 
-let tablePostIt = [];
-let widthMenu = document.getElementById("menu").offsetWidth;
-let heightBanner = document.getElementById("banner").offsetHeight;
+widthMenu = document.getElementById("menu").offsetWidth;
+heightBanner = document.getElementById("banner").offsetHeight;
 
 function handlerMouseMove(e){
     document.getElementById("mouse_x").innerHTML = "Mouse X : "+e.clientX;
     document.getElementById("mouse_y").innerHTML = "Mouse Y : "+e.clientY;
     mouseX = e.clientX;
     mouseY = e.clientY;
-    if(actualId != -1){
-        switch(action){
-            case "move":
-                tablePostIt[actualId].move(actualId, mouseX, mouseY, widthMenu, heightBanner);
-                break;
+    //console.log("actualId: "+actualId+" / mouseX: "+mouseX+" / mouseY: "+mouseY+" / widthMenu: "+widthMenu+" / heightBanner: "+heightBanner);
+    // if(actualId != -1){
+    //     switch(action){
+    //         case "move":
+    //             tablePostIt[actualId].move(actualId, mouseX, mouseY, widthMenu, heightBanner);
+    //             break;
             
-            case "resize":
-                break;
+    //         case "resize":
+    //             tablePostIt[actualId].resize();
+    //             break;
 
-            case "none":
-                break;
-        }
-    }
+    //         case "none":
+    //             break;
+    //     }
+    // }else{
+    //     // If the actualId is -1 it means we're not doing anything
+    //     action = "none";
+    // }
+    // console.log("ACTION IS : "+action);
 }
 
 document.addEventListener("mousemove", handlerMouseMove, false);

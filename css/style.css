@@ -153,5 +153,5 @@ body{
     justify-content: center;
     align-items: center;
     color: var(--var-gray1);
-    border: 1px solid var(--var-gray1);
+    /* border: 1px solid var(--var-gray1); */
 }

@@ -27,9 +27,35 @@ class PostIt{
         this.status = status;
     }
 
+    getId(){
+        console.log("Actual id"+actualId)
+        console.log("Ancien id index : "+indexPostIt);
+        console.log("Nouvel id this.id : "+this.id);
+        
+        if((actualId == -1) || (actualId != this.id)){
+            actualId = this.id;
+        }else if(actualId == this.id){
+            if(actualId == -1){
+                // This test is for the very first time we clic on a post-it so we don't have to clic twice to select it
+                actualId = this.id;
+            }else{
+                actualId = -1;
+            }
+        }
+        document.getElementById("post_it_id").innerHTML = "Post-it id : "+actualId;
+        //indexPostIt = actualId;
+        console.log("Id que l'on garde : "+actualId);
+        return actualId;
+    }
+
     myActionValue(leAction){
-        actualId = this.getId();
-        console.log("YO"+actualId);
+        if(action == "move" || action == "resize"){
+            actualId = this.getId();
+        }else{
+            actualId = this.id;
+        }
+        
+        console.log("YO "+actualId);
         action = leAction;
         console.log("MYACTIONVALUE action is : "+leAction+" // actualId "+actualId);
         document.getElementById("post_it_id").innerHTML = "Post-it id : "+actualId;
@@ -54,25 +80,6 @@ class PostIt{
             // If the actualId is -1 it means we're not doing anything
             action = "none";
         }
-    }
-
-    getId(){
-        // console.log("Ancien id : "+indexPostIt);
-        // console.log("Nouvel id : "+this.id);
-        if((indexPostIt == -1) || (indexPostIt != this.id)){
-            actualId = this.id;
-        }else if(indexPostIt == this.id){
-            if(actualId == -1){
-                // This test is for the very first time we clic on a post-it so we don't have to clic twice to select it
-                actualId = this.id;
-            }else{
-                actualId = -1;
-            }
-        }
-        document.getElementById("post_it_id").innerHTML = "Post-it id : "+actualId;
-        indexPostIt = actualId;
-        // console.log("Id que l'on garde : "+actualId);
-        return actualId;
     }
 
     createContainerText(){
@@ -106,6 +113,7 @@ class PostIt{
             mydiv.height = postItOptions.height+"px";
             mydiv.style.marginLeft = postItOptions.marginLeft+"px";
             mydiv.style.width = postItOptions.width+"px";
+            mydiv.style.border = postItOptions.borderSize+"px solid var(--var-gray1)";
             mydiv.innerHTML = options.logo;
             mydiv.onclick = ()=>{ this.myActionValue(options.nom);} ;
             document.getElementById("OptionPostIt_"+this.id).appendChild(mydiv);
@@ -115,6 +123,9 @@ class PostIt{
     display(idDuPostIt){
         let myPostIt;
         let isNew;
+        if(tablePostIt[idDuPostIt] == null){
+            console.log("yeah it works");
+        }
         if (document.getElementById("PostIt_"+idDuPostIt) == null){
             // The post it doesn't exist so we create it
             myPostIt = document.createElement("div");
@@ -138,7 +149,9 @@ class PostIt{
         myPostIt.style.transform = "rotate("+this.rotation+"deg)";
         myPostIt.style.position = "absolute";
         // Anonymous function doesn't knows about .this
-        myPostIt.onclick = ()=>{ this.getId();} ;
+        //myPostIt.onclick = ()=>{ this.getId();} ;
+        myPostIt.onclick = ()=>{ this.myActionValue("none");} ;
+        event.stopPropagation();
 
         if(isNew){
             document.getElementById("zone_post_it").appendChild(myPostIt);
@@ -146,6 +159,7 @@ class PostIt{
             this.createOptionsMenu();
             this.createTheOptions();
         }else if(this.status == 0){
+            // document.getElementById("zone_post_it").removeChild(myPostIt);
             myPostIt.style.display = "none";
         }
     }
@@ -160,9 +174,8 @@ class PostIt{
      * @param {number} heightBanner - height of the top banner of the website
      */
     move(idDuPostIt, newX, newY, widthMenu, heightBanner){
-        console.log("Dans function move "+idDuPostIt);
-        this.x = newX-widthMenu-(this.width/2);
-        this.y = newY-heightBanner-(this.height/2);
+        this.x = newX-widthMenu-(this.width-(postItOptions.left+postItOptions.marginLeft+postItOptions.width+(postItOptions.width/2)+(postItOptions.borderSize*3)));
+        this.y = newY-heightBanner-(this.height-((postItOptions.bottom)+(postItOptions.height/2)+postItOptions.borderSize));
         if(this.x <= 0){
             this.x = 0;
         }else if(this.x+this.width+widthMenu > window.innerWidth){
@@ -173,10 +186,9 @@ class PostIt{
         }else if(this.y+this.height+heightBanner > window.innerHeight){
             this.y = window.innerHeight-this.height-heightBanner;
         }
-        console.log("MOVE actualId "+actualId);
+        // console.log("MOVE actualId "+actualId);
         this.display(idDuPostIt);
-        console.log("DISPLAY actualId "+actualId);
-        // console.log("this x "+this.x+" // this y "+this.y);
+        // console.log("DISPLAY actualId "+actualId);
     }
 
     resize(){
@@ -237,6 +249,9 @@ class PostIt{
         this.status = 0;
         action = "none";
         console.log("send to trash action"+action);
+
+        delete tablePostIt[this.id];
+
         this.display(this.id);
     }
 

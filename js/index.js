@@ -47,8 +47,10 @@ let postItOptions = {
     bottom : 5,
     left : 5, 
     marginLeft : 10,
-    width : 30
+    width : 30,
+    borderSize : 1
 };
+// bug doit cliquer 2 fois pour ne plus avoir le post-it sticky
 
 
 window.addEventListener("load", () =>{
@@ -61,24 +63,24 @@ function handlerMouseMove(e){
     document.getElementById("mouse_y").innerHTML = "Mouse Y : "+e.clientY;
     mouseX = e.clientX;
     mouseY = e.clientY;
-    //console.log("actualId: "+actualId+" / mouseX: "+mouseX+" / mouseY: "+mouseY+" / widthMenu: "+widthMenu+" / heightBanner: "+heightBanner);
-    // if(actualId != -1){
-    //     switch(action){
-    //         case "move":
-    //             tablePostIt[actualId].move(actualId, mouseX, mouseY, widthMenu, heightBanner);
-    //             break;
+    // console.log("actualId: "+actualId+" / mouseX: "+mouseX+" / mouseY: "+mouseY+" / widthMenu: "+widthMenu+" / heightBanner: "+heightBanner);
+    if(actualId != -1){
+        switch(action){
+            case "move":
+                tablePostIt[actualId].move(actualId, mouseX, mouseY, widthMenu, heightBanner);
+                break;
             
-    //         case "resize":
-    //             tablePostIt[actualId].resize();
-    //             break;
+            case "resize":
+                tablePostIt[actualId].resize();
+                break;
 
-    //         case "none":
-    //             break;
-    //     }
-    // }else{
-    //     // If the actualId is -1 it means we're not doing anything
-    //     action = "none";
-    // }
+            case "none":
+                break;
+        }
+    }else{
+        // If the actualId is -1 it means we're not doing anything
+        action = "none";
+    }
     // console.log("ACTION IS : "+action);
 }
 
@@ -113,7 +115,9 @@ function createPostIt(){
 
 function displayPostIt(){
     for(let p = 0; p < tablePostIt.length; p++){
-        tablePostIt[p].display(p);  
+        if(tablePostIt[p] != null){
+            tablePostIt[p].display(p);
+        }
     }
 }
 

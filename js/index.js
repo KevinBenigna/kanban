@@ -50,10 +50,45 @@ let postItOptions = {
     width : 30,
     borderSize : 1
 };
-// bug doit cliquer 2 fois pour ne plus avoir le post-it sticky
 
 
 window.addEventListener("load", () =>{
+
+function prepareEatCookie(){
+    let muhcookie = JSON.parse(readCookie("mesPostIt"));
+    // console.log(muhcookie);
+    if(muhcookie !== null){
+        for(let p = 0; p < muhcookie.length; p++){
+            if(muhcookie[p] !== null){
+                // console.log("ID ?!",muhcookie[p].id);
+                // console.log(muhcookie[p].id, muhcookie[p].indexu, muhcookie[p].x, muhcookie[p].y, muhcookie[p].width, muhcookie[p].height, muhcookie[p].backgroundColor, muhcookie[p].color, muhcookie[p].text, muhcookie[p].fontSize, muhcookie[p].rotation, muhcookie[p].status);
+                tablePostIt.push(new PostIt(muhcookie[p].id, muhcookie[p].indexu, muhcookie[p].x, muhcookie[p].y, muhcookie[p].width, muhcookie[p].height, muhcookie[p].backgroundColor, muhcookie[p].color, muhcookie[p].text, muhcookie[p].fontSize, muhcookie[p].rotation, muhcookie[p].status));
+                tablePostIt[muhcookie[p].id].display();
+                //tablePostIt[tablePostIt.length-1].display();
+            }else{
+                tablePostIt.push(null);
+            }
+        }
+        console.log(tablePostIt);
+        // displayPostIt();
+    }
+    
+}
+
+function prepareRecipeCookie(){
+    // console.log(JSON.stringify(tablePostIt));
+    createCookie("mesPostIt", JSON.stringify(tablePostIt), 300);
+}
+
+
+
+// Here we load the cookie
+prepareEatCookie();
+
+// Here we save the cookie
+setInterval(() => {
+    prepareRecipeCookie(tablePostIt);
+}, 2000);
 
 widthMenu = document.getElementById("menu").offsetWidth;
 heightBanner = document.getElementById("banner").offsetHeight;
@@ -120,26 +155,5 @@ function displayPostIt(){
         }
     }
 }
-
-
-
-
-
-
-
-
-// Testing my classes
-
-// tablePostIt[0].move(300, 100);
-// tablePostIt[0].resize(50, 50);
-// tablePostIt[0].forward(0, tablePostIt);
-// tablePostIt[1].sendToTrash();
-
-
-// tablePostIt[0].changeBackgroundColor("#BBBBFF");
-// tablePostIt[0].changeColor("#662299");
-// tablePostIt[0].changeFontSize(36);
-// tablePostIt[0].changeText("Yo new text here");
-// displayPostIt();
 
 })

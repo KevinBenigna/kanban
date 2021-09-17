@@ -123,15 +123,12 @@ class PostIt{
     display(idDuPostIt){
         let myPostIt;
         let isNew;
-        if(tablePostIt[idDuPostIt] == null){
-            console.log("yeah it works");
-        }
         if (document.getElementById("PostIt_"+idDuPostIt) == null){
             // The post it doesn't exist so we create it
             myPostIt = document.createElement("div");
             isNew = 1;
-            console.log("IS NEW ?!");
-            console.log("ID POST IT : "+idDuPostIt)
+            // console.log("IS NEW ?!");
+            // console.log("ID POST IT : "+idDuPostIt);
         }else{
             myPostIt = document.getElementById("PostIt_"+idDuPostIt);
             isNew = 0;
@@ -159,8 +156,8 @@ class PostIt{
             this.createOptionsMenu();
             this.createTheOptions();
         }else if(this.status == 0){
-            // document.getElementById("zone_post_it").removeChild(myPostIt);
-            myPostIt.style.display = "none";
+            document.getElementById("zone_post_it").removeChild(myPostIt);
+            //myPostIt.style.display = "none";
         }
     }
 
@@ -245,14 +242,17 @@ class PostIt{
         myPostIt.style.zIndex = maxIndex++;
     }
 
+    // is actually for now a delete
     sendToTrash(){
         this.status = 0;
         action = "none";
-        console.log("send to trash action"+action);
+        // console.log("send to trash action"+action);
 
-        delete tablePostIt[this.id];
-
+        // We go in the display function and remove the child
         this.display(this.id);
+
+        // We then delete it from the table, the next time displayPostIt() is called it won't be there
+        delete tablePostIt[this.id];
     }
 
     changeBackgroundColor(newColor){
